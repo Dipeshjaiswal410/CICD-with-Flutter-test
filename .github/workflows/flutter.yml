@@ -37,7 +37,7 @@ jobs:
 
       # Step 6: Upload APK artifact using the latest version of upload-artifact
       - name: Upload APK artifact
-        uses: github/actions/upload-artifact@v3
+        uses: github/actions/upload-artifact@v2
         with:
           name: flutter-apk
           path: build/app/outputs/flutter-apk/app-debug.apk  # Adjust this path if using a release build
