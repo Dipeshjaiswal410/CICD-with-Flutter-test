@@ -1,0 +1,44 @@
+name: Flutter CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the 'main' branch
+  pull_request:
+    branches:
+      - main  # Trigger the workflow on pull request to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Flutter environment
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.0.0'  # Specify your Flutter version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Step 4: Run tests
+      - name: Run widget tests
+        run: flutter test
+
+      # Step 5: Build the APK (debug mode by default, change to release if needed)
+      - name: Build APK
+        run: flutter build apk --debug # Change to --release for release build
+
+      # Optional: Upload build artifacts (e.g., APK)
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: flutter-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk  # Adjust this path if using a release build
+
